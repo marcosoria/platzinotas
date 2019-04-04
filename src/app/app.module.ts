@@ -1,3 +1,4 @@
+import { AuthService } from './services/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -7,13 +8,14 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatExpansionModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, MatOptionModule, MatListModule, MatSnackBarModule, MatDialogModule } from '@angular/material';
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { FormsModule } from '@angular/forms';
 import { NotesService } from './services/notes.service';
+import { MessagingService } from './services/messaging.service';
 
 const firebaseConfig: any = {
   apiKey: "AIzaSyCJ4ePhwaYHSI1XcdKzAm_rsd0v0JWmiPM",
@@ -53,7 +55,11 @@ const firebaseConfig: any = {
     AngularFireDatabaseModule,
     FormsModule
   ],
-  providers: [NotesService],
+  providers: [
+    NotesService,
+    AuthService,
+    MessagingService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

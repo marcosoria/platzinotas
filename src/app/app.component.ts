@@ -1,3 +1,4 @@
+import { AuthService } from './services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { NotesService } from './services/notes.service';
@@ -15,7 +16,12 @@ export class AppComponent implements OnInit {
   note: any = {};
   notes: any = [];
   key: string = null;
-  constructor(private swUpate: SwUpdate, private noteService: NotesService, private snackBar: MatSnackBar, public dialog: MatDialog){
+  constructor(
+    private swUpate: SwUpdate, 
+    private noteService: NotesService, 
+    private authService: AuthService,
+    private snackBar: MatSnackBar, 
+    public dialog: MatDialog){
     noteService.getNotes().subscribe((fbNotes) => {
       this.notes = fbNotes;
       console.log(this.notes);
@@ -28,6 +34,10 @@ export class AppComponent implements OnInit {
         window.location.reload();
       })
     }
+  }
+
+  login(){
+    this.authService.loginWithFacebook();
   }
 
   selectNote(note){    
