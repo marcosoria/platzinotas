@@ -36,8 +36,8 @@ export class NotesService {
     return itemsRef.update(key, { title: note.title, body: note.body, category: note.category });
   }
 
-  public deleteNote(id){
+  public deleteNote(key){
     const itemsRef = this.afDB.list('notes');
-    return itemsRef.remove(id);
+    return itemsRef.remove(key);
   }
 }

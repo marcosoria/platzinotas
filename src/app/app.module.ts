@@ -2,11 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent, DeleteDialogComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatExpansionModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, MatOptionModule, MatListModule, MatSnackBarModule } from '@angular/material';
+import { MatToolbarModule, MatExpansionModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, MatOptionModule, MatListModule, MatSnackBarModule, MatDialogModule } from '@angular/material';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -25,7 +25,11 @@ const firebaseConfig: any = {
 };
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DeleteDialogComponent
+  ],
+  entryComponents:[
+    DeleteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +43,8 @@ const firebaseConfig: any = {
     MatOptionModule,
     MatInputModule,
     MatButtonModule,
-    MatListModule,    
+    MatListModule,  
+    MatDialogModule,  
     MatSnackBarModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,

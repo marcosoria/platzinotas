@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { NotesService } from './services/notes.service';
-import { MatSnackBar } from '@angular/material';
-import { map } from 'rxjs/operators';
+import { MatSnackBar, MatDialog } from '@angular/material';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'pwa';
+  title = 'Platzi Notes';
   panelOpenState: boolean = false;
   categorias: any = ['Trabajo', 'Personal'];
   note: any = {};
   notes: any = [];
   key: string = null;
-  constructor(private swUpate: SwUpdate, private noteService: NotesService, private snackBar: MatSnackBar){
+  constructor(private swUpate: SwUpdate, private noteService: NotesService, private snackBar: MatSnackBar, public dialog: MatDialog){
     noteService.getNotes().subscribe((fbNotes) => {
       this.notes = fbNotes;
       console.log(this.notes);
@@ -33,6 +33,18 @@ export class AppComponent implements OnInit {
   selectNote(note){    
     this.note = note.data;
     this.key = note.key;
+  }
+
+  deleteNote(note){
+    this.note = note.data;
+    this.key = note.key;
+    const dialogRef = this.dialog.open(DeleteDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.noteService.deleteNote(this.key);
+      }
+    });
   }
 
   saveNote(){
@@ -62,4 +74,13 @@ export class AppComponent implements OnInit {
 
     
   }
+}
+
+
+@Component({
+  selector: 'dialog-delete-note',
+  templateUrl: 'dialog-delete-note.html'
+})
+export class DeleteDialogComponent{
+  
 }
