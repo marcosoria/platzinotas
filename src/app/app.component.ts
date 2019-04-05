@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { NotesService } from './services/notes.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
+import { MessagingService } from './services/messaging.service';
 
 @Component({
   selector: 'app-root',
@@ -16,16 +17,21 @@ export class AppComponent implements OnInit {
   note: any = {};
   notes: any = [];
   key: string = null;
+  message: any = {};
   constructor(
     private swUpate: SwUpdate, 
     private noteService: NotesService, 
     private authService: AuthService,
     private snackBar: MatSnackBar, 
-    public dialog: MatDialog){
+    public dialog: MatDialog,
+    public messagingService: MessagingService){
     noteService.getNotes().subscribe((fbNotes) => {
       this.notes = fbNotes;
       console.log(this.notes);
-    });    
+    });   
+    this.messagingService.getPermission(); 
+    this.messagingService.receiveMessage();
+    this.message = this.messagingService.currentMessage;
   };
 
   ngOnInit(): void{
